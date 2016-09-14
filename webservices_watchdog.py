@@ -8,8 +8,8 @@ import urllib.request
 import subprocess
 
 webservices = {'webservice_name':   
-                   {   'address': 'http://localhost:8001/', 
-                    'executable': 'C:\\path\\to\\startup_script.vbs'}
+                   {   'address': 'http://localhost:8000/', 
+                    'executable': '.\\testservice\\start_testservice.bat'}
               }
 
 check_interval = 600 # seconds, also used at system startup
