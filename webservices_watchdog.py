@@ -15,7 +15,7 @@ webservices = {'webservice_name':
 check_interval = 600 # seconds, also used at system startup
 start_interval =  30 # seconds
 
-logging.basicConfig(filename = 'webservices_watchdog3.log', 
+logging.basicConfig(filename = 'webservices_watchdog.log', 
                     format   = '%(asctime)s %(message)s', 
                     datefmt  = '%Y-%m-%d %H:%M:%S', 
                     level    = logging.DEBUG)
@@ -26,7 +26,6 @@ def is_available(ws):
     try:
         response = urllib.request.urlopen(addr).getcode()
     except URLError:
-        #logging.warning('Not reachable at all')
         logging.warning('Cannot reach %s', ws)
         return False
     #logging.info('Got HTTP response code %s', response)
@@ -39,6 +38,7 @@ def start_process(ws):
     script = webservices[ws]['executable']
     logging.info('Starting %s', script)
     process = subprocess.Popen(script, shell = True)
+    # TODO: get PID of the actual server not the startup script console
     logging.info('Now running with PID %d', process.pid)
 
 def check_webservice(ws, i):
@@ -56,7 +56,7 @@ if __name__ == '__main__':
     logging.info('-' * 60)
     logging.info('Starting webservice_watchdog.py')
 
-    # w PC start completely before starting webservices
+    # let PC start completely before starting webservices
     while uptime.uptime() < check_interval:
         time.sleep(30)
 
